@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Router } from '@angular/router';
 import { Subject } from "rxjs/Subject";
 import "rxjs/add/operator/switchMap";
 
@@ -15,7 +16,7 @@ export class ProductsCollectionComponent implements OnDestroy, OnInit {
     private _products: Product[];
     private _filterStream$: Subject<ProductFilter> = new Subject;
 
-    constructor(private _productService: ProductService) { }
+    constructor(private _productService: ProductService, private router: Router) { }
 
     ngOnInit(): void {
         this._filterStream$
@@ -30,6 +31,10 @@ export class ProductsCollectionComponent implements OnDestroy, OnInit {
 
     filterCollection(filter: ProductFilter): void {
         this._filterStream$.next(filter);
+    }
+
+    seleccionarProducto(producto: Product): void {
+        this.router.navigate(['/products', producto.id]);
     }
 
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
